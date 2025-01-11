@@ -6,7 +6,6 @@ import Layout from "../../components/Layout/Layout";
 import { useAuth } from "../../context/auth";
 import { Select } from "antd";
 const { Option } = Select;
-import moment from "moment";
 
 const AdminOrders = () => {
   const [status, setStatus] = useState([
@@ -81,7 +80,7 @@ const AdminOrders = () => {
                         </Select>
                       </td>
                       <td>{o?.buyer?.name}</td>
-                      <td>{moment(o?.createAt).fromNow()}</td>
+                      <td>{o?.createAt.fromNow()}</td>
                       <td>{o?.payment.success ? "Success" : "Failed"}</td>
                       <td>{o?.products?.length}</td>
                     </tr>
