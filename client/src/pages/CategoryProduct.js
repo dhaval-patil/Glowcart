@@ -4,7 +4,6 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../styles/CategoryProductStyles.css";
 
-
 const CategoryProduct = () => {
   const params = useParams();
   const navigate = useNavigate();
@@ -47,7 +46,7 @@ const CategoryProduct = () => {
                       <h5 className="card-title card-price">
                         {p.price.toLocaleString("en-US", {
                           style: "currency",
-                          currency: "USD",
+                          currency: "INR",
                         })}
                       </h5>
                     </div>
@@ -61,13 +60,11 @@ const CategoryProduct = () => {
                       >
                         More Details
                       </button>
-                      
                     </div>
                   </div>
                 </div>
               ))}
             </div>
-            
           </div>
         </div>
       </div>

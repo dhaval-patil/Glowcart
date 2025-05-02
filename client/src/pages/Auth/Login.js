@@ -17,10 +17,13 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(`${process.env.REACT_APP_API}/api/v1/auth/login`, {
-        email,
-        password,
-      });
+      const res = await axios.post(
+        `${process.env.REACT_APP_API}/api/v1/auth/login`,
+        {
+          email,
+          password,
+        }
+      );
       if (res && res.data.success) {
         toast.success(res.data && res.data.message);
         setAuth({
@@ -39,10 +42,10 @@ const Login = () => {
     }
   };
   return (
-    <Layout >
-      <div className="form-container ">
+    <Layout>
+      <div className="form-container overflow-auto">
         <form onSubmit={handleSubmit}>
-          <h4 className="title">LOGIN FORM</h4>
+          <h4 className="title">LOGIN</h4>
 
           <div className="mb-3">
             <input
@@ -68,13 +71,19 @@ const Login = () => {
           </div>
 
           <div className="mb-3">
-            <button type="button" className="btn btn-primary" onClick={() => { navigate('/forgot-password') }}>
-              forget password?
+            <button
+              type="button"
+              className="btn btn-primary"
+              onClick={() => {
+                navigate("/forgot-password");
+              }}
+            >
+              Forget password?
             </button>
           </div>
 
-          <button type="submit" className="btn btn-primary">
-            LOGIN
+          <button type="submit" className="btn btn-1 btn-primary">
+            Login
           </button>
         </form>
       </div>

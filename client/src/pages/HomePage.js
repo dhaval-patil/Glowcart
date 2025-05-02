@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Layout from "../components/Layout/Layout";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import {Checkbox, Radio , Carousel} from 'antd'
+import { Checkbox, Radio, Carousel } from "antd";
 import { Prices } from "../components/Prices";
 import { useCart } from "../context/cart";
 import toast from "react-hot-toast";
@@ -11,7 +11,7 @@ import { AiOutlineReload } from "react-icons/ai";
 
 const HomePage = () => {
   const navigate = useNavigate();
-  const [cart, setCart] = useCart()
+  const [cart, setCart] = useCart();
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [checked, setChecked] = useState([]);
@@ -21,15 +21,17 @@ const HomePage = () => {
   const [loading, setLoading] = useState(false);
 
   const bannerImages = [
-    "/images/Banner5.jpg",
-    "/images/Banner6.jpg",
-    "/images/Banner3.jpg",
+    `/images/banner7.webp`,
+    `/images/beuty.webp`,
+    `/images/beuty1.webp`,
   ];
 
   //get all cat
   const getAllCategory = async () => {
     try {
-      const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/category/get-category`);
+      const { data } = await axios.get(
+        `${process.env.REACT_APP_API}/api/v1/category/get-category`
+      );
       if (data?.success) {
         setCategories(data?.category);
       }
@@ -46,12 +48,12 @@ const HomePage = () => {
   //get Products
   const getAllProducts = async () => {
     try {
-      setLoading(true)
-      const {data} = await axios.get(`${process.env.REACT_APP_API}/api/v1/product/product-list/${page}`
+      setLoading(true);
+      const { data } = await axios.get(
+        `${process.env.REACT_APP_API}/api/v1/product/product-list/${page}`
       );
-      setLoading(false)
-      console.log(products);
-      
+      setLoading(false);
+
       setProducts(data.products);
     } catch (error) {
       setLoading(false);
@@ -66,7 +68,9 @@ const HomePage = () => {
   //get Total Count
   const getTotal = async () => {
     try {
-      const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/product/product-count`);
+      const { data } = await axios.get(
+        `${process.env.REACT_APP_API}/api/v1/product/product-count`
+      );
       setTotal(data?.total);
     } catch (error) {
       console.log(error);
@@ -82,7 +86,9 @@ const HomePage = () => {
   const loadMore = async () => {
     try {
       setLoading(true);
-      const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/product/product-list/${page}`);
+      const { data } = await axios.get(
+        `${process.env.REACT_APP_API}/api/v1/product/product-list/${page}`
+      );
       setLoading(false);
       setProducts([...products, ...data?.products]);
     } catch (error) {
@@ -91,9 +97,8 @@ const HomePage = () => {
     }
   };
 
-
-   // filter by cat
-   const handleFilter = (value, id) => {
+  // filter by cat
+  const handleFilter = (value, id) => {
     let all = [...checked];
     if (value) {
       all.push(id);
@@ -110,20 +115,21 @@ const HomePage = () => {
     if (checked.length || radio.length) filterProduct();
   }, [checked, radio]);
 
-
   //get filterd product
   const filterProduct = async () => {
     try {
-      const { data } = await axios.post(`${process.env.REACT_APP_API}/api/v1/product/product-filters`, {
-        checked,
-        radio,
-      });
+      const { data } = await axios.post(
+        `${process.env.REACT_APP_API}/api/v1/product/product-filters`,
+        {
+          checked,
+          radio,
+        }
+      );
       setProducts(data?.products);
     } catch (error) {
       console.log(error);
     }
   };
-
 
   return (
     <Layout title={"All Product - best Offers"}>
@@ -139,7 +145,7 @@ const HomePage = () => {
           </div>
         ))}
       </Carousel>
-       <div className="container-fluid row mt-3 home-page">
+      <div className="container-fluid row mt-3 home-page">
         <div className="col-md-3 filters">
           <h4 className="text-center">Filter By Category</h4>
           <div className="d-flex flex-column">
@@ -173,18 +179,17 @@ const HomePage = () => {
           </div>
         </div>
         <div className="col-md-9">
-          {JSON.stringify(radio,null,4)}
           <h1 className="text-center">All Products</h1>
           <div className="d-flex flex-wrap">
             {products?.map((p) => (
-              <div className="card m-2" style={{ width: "18rem" }}>
-                <img src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${p._id}`}
+              <div key={p._id} className="card m-2" style={{ width: "18rem" }}>
+                <img
+                  src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${p._id}`}
                   className="card-img-top"
                   alt={p.name}
                 />
-                 <div className="card-body">
-     
-                 <div className="card-name-price">
+                <div className="card-body">
+                  <div className="card-name-price">
                     <h5 className="card-title">{p.name}</h5>
                     <h5 className="card-title card-price">
                       {p.price.toLocaleString("en-IN", {
@@ -197,25 +202,31 @@ const HomePage = () => {
                     {p.description.substring(0, 60)}...
                   </p>
                   <div className="card-name-price">
-                  
-                  <button class="btn btn-primary ms-1" 
-                  className="btn btn-primary ms-1"
-                    onClick={() => navigate(`/product/${p.slug}`)}>
+                    <button
+                      className="btn btn-primary ms-1"
+                      onClick={() => navigate(`/product/${p.slug}`)}
+                    >
                       More Details
                     </button>
-                  <button class="btn btn-secondary ms-1" 
-                   onClick={() => {setCart([...cart,p])
-                    localStorage.setItem('cart', JSON.stringify([...cart,p]))
-                    toast.success('Item Added to Cart')
-                   }}>
-                    ADD TO CART
+                    <button
+                      className="btn btn-secondary ms-1"
+                      onClick={() => {
+                        setCart([...cart, p]);
+                        localStorage.setItem(
+                          "cart",
+                          JSON.stringify([...cart, p])
+                        );
+                        toast.success("Item Added to Cart");
+                      }}
+                    >
+                      ADD TO CART
                     </button>
+                  </div>
                 </div>
-              </div>
               </div>
             ))}
           </div>
-          
+
           <div className="m-2 p-3">
             {products && products.length < total && (
               <button
@@ -225,7 +236,7 @@ const HomePage = () => {
                   setPage(page + 1);
                 }}
               >
-                 {loading ? (
+                {loading ? (
                   "Loading ..."
                 ) : (
                   <>
@@ -235,7 +246,7 @@ const HomePage = () => {
                 )}
               </button>
             )}
-            </div>
+          </div>
         </div>
       </div>
     </Layout>

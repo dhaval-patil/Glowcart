@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import "../../styles/AuthStyles.css";
 
-
 const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -19,14 +18,17 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(`${process.env.REACT_APP_API}/api/v1/auth/register`, {
-        name,
-        email,
-        password,
-        phone,
-        address,
-        answer,
-      });
+      const res = await axios.post(
+        `${process.env.REACT_APP_API}/api/v1/auth/register`,
+        {
+          name,
+          email,
+          password,
+          phone,
+          address,
+          answer,
+        }
+      );
       if (res && res.data.success) {
         toast.success(res.data && res.data.message);
         navigate("/login");
@@ -41,9 +43,9 @@ const Register = () => {
 
   return (
     <Layout>
-      <div className="form-container ">
+      <div className="form-container overflow-auto">
         <form onSubmit={handleSubmit}>
-          <h4 className="title">REGISTER FORM</h4>
+          <h4 className="title">Sign up</h4>
           <div className="mb-3">
             <input
               type="text"
@@ -51,7 +53,7 @@ const Register = () => {
               onChange={(e) => setName(e.target.value)}
               className="form-control"
               id="exampleInputEmail1"
-              placeholder="Enter Your Name"
+              placeholder="Enter your name"
               required
               autoFocus
             />
@@ -63,7 +65,7 @@ const Register = () => {
               onChange={(e) => setEmail(e.target.value)}
               className="form-control"
               id="exampleInputEmail1"
-              placeholder="Enter Your Email "
+              placeholder="Enter your email "
               required
             />
           </div>
@@ -74,7 +76,7 @@ const Register = () => {
               onChange={(e) => setPassword(e.target.value)}
               className="form-control"
               id="exampleInputPassword1"
-              placeholder="Enter Your Password"
+              placeholder="Enter your password"
               required
             />
           </div>
@@ -85,7 +87,7 @@ const Register = () => {
               onChange={(e) => setPhone(e.target.value)}
               className="form-control"
               id="exampleInputEmail1"
-              placeholder="Enter Your Phone"
+              placeholder="Enter your phone"
               required
             />
           </div>
@@ -96,7 +98,7 @@ const Register = () => {
               onChange={(e) => setAddress(e.target.value)}
               className="form-control"
               id="exampleInputEmail1"
-              placeholder="Enter Your Address"
+              placeholder="Enter your address"
               required
             />
           </div>
@@ -107,12 +109,12 @@ const Register = () => {
               onChange={(e) => setAnswer(e.target.value)}
               className="form-control"
               id="exampleInputEmail1"
-              placeholder="What is your pet name"
+              placeholder="Enter your nickname"
               required
             />
           </div>
           <button type="submit" className="btn btn-primary">
-            REGISTER
+            Register
           </button>
         </form>
       </div>

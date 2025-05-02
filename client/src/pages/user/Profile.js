@@ -27,13 +27,16 @@ const Profile = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.put(`${process.env.REACT_APP_API}/api/v1/auth/profile`, {
-        name,
-        email,
-        password,
-        phone,
-        address,
-      });
+      const { data } = await axios.put(
+        `${process.env.REACT_APP_API}/api/v1/auth/profile`,
+        {
+          name,
+          email,
+          password,
+          phone,
+          address,
+        }
+      );
       if (data?.errro) {
         toast.error(data?.error);
       } else {
@@ -51,7 +54,7 @@ const Profile = () => {
   };
   return (
     <Layout title={"Your Profile"}>
-      <div className="container-fluid m-3 p-3">
+      <div className="container-fluid m-5 p-5">
         <div className="row">
           <div className="col-md-3">
             <UserMenu />
